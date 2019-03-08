@@ -362,10 +362,3 @@ Element contentElement = ContentExtractor.getContentElementByHtml(html, url);
 Element contentElement = ContentExtractor.getContentElementByHtml(html);
 Element contentElement = ContentExtractor.getContentElementByUrl(url);
 ```
-
-<!--
-
-## Other Documentation
-
-+ [中文文档](https://github.com/CrawlScript/WebCollector/blob/master/README.zh-cn.md)
--->
