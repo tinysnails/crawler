@@ -61,7 +61,7 @@ public class Crawler extends DefaultConfigured {
 
 
     protected CrawlDatums seeds = new CrawlDatums();
-    protected CrawlDatums forcedSeeds = new CrawlDatums();
+    protected CrawlDatums forcedSeeds = new CrawlDatums();  // FIXME forcedSeeds什么意思?
     protected Fetcher fetcher;
     protected int maxExecuteCount = -1;
 
@@ -298,6 +298,13 @@ public class Crawler extends DefaultConfigured {
         return addSeedAndReturn(datum,false);
     }
 
+
+    /**
+     *
+     * @param url
+     * @param force FIXME 什么意思???
+     * @return
+     */
     public CrawlDatum addSeedAndReturn(String url, boolean force) {
         CrawlDatum datum = new CrawlDatum(url);
         return addSeedAndReturn(datum,force);

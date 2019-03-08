@@ -29,12 +29,14 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 /**
+ *
  * @author hu
  */
 public interface Visitor {
 
 
     /**
+     * visit函数定制访问每个页面时所需进行的操作
      * @param page 当前访问页面的信息
      * @param next 可以手工将希望后续采集的任务加到next中（会参与自动去重）
      */

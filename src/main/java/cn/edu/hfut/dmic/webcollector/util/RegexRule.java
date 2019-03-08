@@ -34,6 +34,7 @@ public class RegexRule {
     public RegexRule(String regex){
         addRule(regex);
     }
+    // 批量添加正则
     public RegexRule(String... regexes){
         for(String regex:regexes){
             addRule(regex);

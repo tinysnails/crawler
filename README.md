@@ -1,3 +1,7 @@
+## 使用方式
+1. [WebCollector使用方式一](https://blog.csdn.net/liujinwen1992/article/details/39255549)
+2. [详细使用方式](https://blog.csdn.net/wangmx1993328/article/details/81662001)
+
 # WebCollector
 WebCollector is an open source web crawler framework based on Java.It provides
   some simple interfaces for crawling the Web,you can setup a

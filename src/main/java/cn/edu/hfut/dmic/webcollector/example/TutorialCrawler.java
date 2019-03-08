@@ -73,6 +73,8 @@ public class TutorialCrawler extends BreadthCrawler {
         新版本中，可以直接通过 page.select(css选择器)方法来抽取网页中的信息，等价于
         page.getDoc().select(css选择器)方法，page.getDoc()获取到的是Jsoup中的
         Document对象，细节请参考Jsoup教程
+
+        visit函数定制访问每个页面时所需进行的操作
     */
     @Override
     public void visit(Page page, CrawlDatums next) {

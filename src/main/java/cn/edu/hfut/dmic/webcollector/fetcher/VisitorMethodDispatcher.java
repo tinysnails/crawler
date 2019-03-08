@@ -53,6 +53,13 @@ public class VisitorMethodDispatcher extends DefaultConfigured{
     Method beforeVisitMethod;
     Method afterParseMethod;
 
+    /**
+     * FIXME 这里使用了反射+ runtime
+     * @param visitor
+     * @param autoParse
+     * @param regexRule
+     * @throws Exception
+     */
     public VisitorMethodDispatcher(Visitor visitor, boolean autoParse, RegexRule regexRule) throws Exception {
         this.visitor = visitor;
         this.autoParse = autoParse;
