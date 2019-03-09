@@ -17,10 +17,13 @@
  */
 package cn.edu.hfut.dmic.webcollector.example;
 
+import cn.edu.hfut.dmic.contentextractor.ContentExtractor;
+import cn.edu.hfut.dmic.contentextractor.News;
 import cn.edu.hfut.dmic.webcollector.model.CrawlDatums;
 import cn.edu.hfut.dmic.webcollector.model.Page;
 import cn.edu.hfut.dmic.webcollector.plugin.rocks.BreadthCrawler;
 
+import java.sql.SQLOutput;
 
 
 /**
@@ -82,6 +85,13 @@ public class TutorialCrawler extends BreadthCrawler {
             String title = page.select("h1.title-article").first().text();
             String author = page.select("a#uid").first().text();
             System.out.println("title:" + title + "\tauthor:" + author);
+            try {
+                System.out.println("================================正文开始=============================");
+                System.out.println(ContentExtractor.getContentByHtml(page.html()));
+                System.out.println("================================正文结束=============================");
+            } catch (Exception e) {
+                System.out.println("================================提取正文失败==========================");
+            }
         }
     }
 

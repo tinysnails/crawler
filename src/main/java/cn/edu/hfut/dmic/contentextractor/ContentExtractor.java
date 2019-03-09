@@ -197,6 +197,12 @@ public class ContentExtractor {
         return news;
     }
 
+    /**
+     * 正则提取时间
+     * @param contentElement
+     * @return
+     * @throws Exception
+     */
     protected String getTime(Element contentElement) throws Exception {
         String regex = "([1-2][0-9]{3})[^0-9]{1,5}?([0-1]?[0-9])[^0-9]{1,5}?([0-9]{1,2})[^0-9]{1,5}?([0-2]?[1-9])[^0-9]{1,5}?([0-9]{1,2})[^0-9]{1,5}?([0-9]{1,2})";
         Pattern pattern = Pattern.compile(regex);
@@ -511,18 +517,27 @@ public class ContentExtractor {
         return getNewsByHtml(html, url);
     }
 
+
+
     public static void main(String[] args) throws Exception {
 
 //        News news = ContentExtractor.getNewsByUrl("https://new.qq.com/omn/20190218/20190218A18B1U.html");
 //        News news = ContentExtractor.getNewsByUrl("https://news.163.com/19/0218/16/E8AEK3790001875N.html");
 //        News news = ContentExtractor.getNewsByUrl("http://www.sohu.com/a/295280105_428290?g=0?code=a174664abe974674cf3c0611490d77db&_f=index_chan08cpc_1");
-        News news = ContentExtractor.getNewsByUrl("http://zy.cnhubei.com/dongxiang/xs1NL~m100");
+//        News news = ContentExtractor.getNewsByUrl("https://new.qq.com/cmsn/20190308/20190308009253.html");
+
+        //标题页
+//        News news = ContentExtractor.getNewsByUrl("https://tuijian.hao123.com/");   // 标题页,但是不提示异常,而是显示一个div块
+        String url = "http://www.sohu.com/a/300020261_362042?g=0?code=a0925b1eaf671e1ad528c793315e686b&spm=smpc.home.top-news1.1.1552105540677g6q5sAA&_f=index_cpc_0";
+        News news = ContentExtractor.getNewsByUrl(url);
+
 //        News news = ContentExtractor.getNewsByUrl("https://baike.baidu.com/item/handle/2971688?fr=aladdin");
-        System.out.println("新闻url为:  "+news.getUrl());
-        System.out.println("新闻标题为:  "+news.getTitle());
-        System.out.println("获取时间为： "+news.getTime());       // FIXME 腾讯新闻时间获取不对,https://new.qq.com/omn/20190218/20190218A18B1U.html
-        System.out.println("新闻内容为:  "+news.getContent());
-        //System.out.println(news.getContentElement());
+        System.out.println("新闻url为:  " + news.getUrl());
+        System.out.println("新闻标题为:  " + news.getTitle());
+        System.out.println("获取时间为： " + news.getTime());       // FIXME 腾讯新闻时间获取不对,https://new.qq.com/omn/20190218/20190218A18B1U.html
+        System.out.println("新闻内容为:  " + news.getContent());
+
+//        System.out.println("源码为: " + okHttpRequester.getResponse(url).html());
 
 //        System.out.println(news);
     }

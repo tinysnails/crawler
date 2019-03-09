@@ -28,7 +28,7 @@ import java.util.Map;
 public class Configuration{
 
     public static final String KEY_MAX_EXECUTE_COUNT = "MAX_EXECUTE_COUNT";
-    public static final String KEY_TOP_N = "TOP_N";
+    public static final String KEY_TOP_N = "TOP_N";     // FIXME topN什么意思?
 
     public static final String KEY_CONNECT_TIMEOUT = "CONNECT_TIMEOUT";
     public static final String KEY_READ_TIMEOUT = "READ_TIMEOUT";

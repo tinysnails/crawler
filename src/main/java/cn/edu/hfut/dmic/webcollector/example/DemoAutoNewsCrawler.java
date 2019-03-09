@@ -19,14 +19,14 @@ public class DemoAutoNewsCrawler extends BreadthCrawler {
     public DemoAutoNewsCrawler(String crawlPath, boolean autoParse) {
         super(crawlPath, autoParse);
         /*start pages*/
-        this.addSeed("https://blog.github.com/");
+        this.addSeed("https://github.blog");
         for(int pageIndex = 2; pageIndex <= 5; pageIndex++) {
-            String seedUrl = String.format("https://blog.github.com/page/%d/", pageIndex);
+            String seedUrl = String.format("https://github.blog/page/%d/", pageIndex);
             this.addSeed(seedUrl);
         }
 
         /*fetch url like "https://blog.github.com/2018-07-13-graphql-for-octokit/" */
-        this.addRegex("https://blog.github.com/[0-9]{4}-[0-9]{2}-[0-9]{2}-[^/]+/");
+        this.addRegex("https://github.blog/[0-9]{4}-[0-9]{2}-[0-9]{2}-[^/]+/");
         /*do not fetch jpg|png|gif*/
         //this.addRegex("-.*\\.(jpg|png|gif).*");
         /*do not fetch url contains #*/
@@ -43,11 +43,15 @@ public class DemoAutoNewsCrawler extends BreadthCrawler {
     public void visit(Page page, CrawlDatums next) {
         String url = page.url();
         /*if page is news page*/
-        if (page.matchUrl("https://blog.github.com/[0-9]{4}-[0-9]{2}-[0-9]{2}[^/]+/")) {
+        if (page.matchUrl("https://github.blog/[0-9]{4}-[0-9]{2}-[0-9]{2}[^/]+/")) {
 
             /*extract title and content of news by css selector*/
-            String title = page.select("h1[class=lh-condensed]").first().text();
-            String content = page.selectText("div.content.markdown-body");
+//            String title = page.select("h1[class=lh-condensed]").first().text();
+//            String content = page.selectText("div.content.markdown-body");
+
+            String title = page.select(".post-item__title").first().text();
+            String content = page.selectText(".post-item__content");
+
 
             System.out.println("URL:\n" + url);
             System.out.println("title:\n" + title);
