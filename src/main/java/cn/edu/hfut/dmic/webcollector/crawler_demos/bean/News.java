@@ -87,15 +87,11 @@ public class News implements Serializable {
 
     @Override
     public String toString() {
-        return "News{" +
-                "id=" + id +
-                ", depth=" + depth +
-                ", host='" + host + '\'' +
-                ", title='" + title + '\'' +
-                ", url='" + url + '\'' +
-                ", content='" + content + '\'' +
-                ", html='" + html + '\'' +
-                ", type='" + type + '\'' +
-                '}';
+        return depth +"," + host + ","+ title +","+ url +","
+                + content + "," + html +","+ type + '\n';
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new News(1,"h","dsf","df","df","sdf").toString());
     }
 }

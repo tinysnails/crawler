@@ -7,6 +7,11 @@ import cn.edu.hfut.dmic.webcollector.model.CrawlDatums;
 import cn.edu.hfut.dmic.webcollector.model.Page;
 import cn.edu.hfut.dmic.webcollector.plugin.ram.RamCrawler;
 import cn.edu.hfut.dmic.webcollector.util.UrlDomainUtils;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class NewsCrawler extends RamCrawler {
 
@@ -18,8 +23,8 @@ public class NewsCrawler extends RamCrawler {
         addSeed(new CrawlDatum("http://news.sohu.com/").meta("depth",1));
 
 
-        this.addRegex(UrlDomainUtils.getDomainByUrl("https://tuijian.hao123.com"+".*"));
-        this.addRegex(UrlDomainUtils.getDomainByUrl("http://news.sohu.com"+".*"));
+        this.addRegex("hao123.com");
+        this.addRegex("sohu.com");
         this.addRegex("-.*#.*");
 
         setThreads(50);
@@ -43,12 +48,22 @@ public class NewsCrawler extends RamCrawler {
             System.out.println("===========未提取到主题内容==========");
         }
 
-//        if (this.template != null) {
-//            int update = this.template.update("INSERT INTO news " +
-//                    "(depth,host,title,url,content,html) value(?,?,?,?,?,?)",depth,host,title,url,content,html);
-//            if(update == 1) System.out.println("insert successful");
-//        }
-     }
+        // 加入种子url
+        Elements elements = page.doc().select("a[href]");
+        for (Element element : elements) {
+            next.add(element.attributes().get("href"));
+        }
+
+        //写入文件
+        try {
+            FileWriter writer = new FileWriter("news.csv", true);
+            StringBuilder sb = new StringBuilder();
+            writer.write(depth +"," + host + ","+ title +","+ url +","
+                    + content + "," + html +'\n');
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
      @AfterParse
      public void afterParse(Page page, CrawlDatums next) {
@@ -90,6 +105,6 @@ public class NewsCrawler extends RamCrawler {
     public static void main(String[] args) throws Exception {
         NewsCrawler crawler = new NewsCrawler(true);
 //        crawler.dbInitialize();
-//        crawler.start(3);
+        crawler.start(4);
     }
 }

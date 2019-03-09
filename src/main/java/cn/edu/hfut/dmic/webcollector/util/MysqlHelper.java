@@ -65,4 +65,9 @@ public class MysqlHelper {
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
+
+//    public static void main(String[] args) throws PropertyVetoException {
+//        new MysqlHelper("jdbc:mysql://localhost:3306/db_whukg", "root",
+//                "password", 1, 100);
+//    }
 }

@@ -24,7 +24,7 @@ public class JsoupDemo {
 
         // 打印Element里面的元素
         for (Element link:links
-             ) {
+        ) {
             System.out.println(String.format("url = %s", link.attributes().get("href")));       // 获取Element的href属性
 
         }
@@ -54,6 +54,7 @@ public class JsoupDemo {
 
     public static void main(String[] args) throws IOException {
 //        new JsoupDemo().WriteUrlHtmlToFile("https://github.blog/page/2/");
+        new JsoupDemo().testJsoup();
 
 
     }
