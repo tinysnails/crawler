@@ -2,7 +2,7 @@ package cn.edu.hfut.dmic.webcollector.crawler_demos.bean;
 
 import java.io.Serializable;
 
-public class News implements Serializable {
+public class NewsBean implements Serializable {
     int id;
     int depth ;
     String host ;
@@ -10,9 +10,26 @@ public class News implements Serializable {
     String url;
     String content ;
     String html ;
-    String type;
+    int type;
 
-    public News(int depth, String host, String title, String url, String content, String html) {
+    // MyBatis期望空的构造器
+    public NewsBean() {
+
+    }
+
+    public NewsBean(int id, int depth, String host, String title, String url, String content, String html, int type) {
+        this.id = id;
+        this.depth = depth;
+        this.host = host;
+        this.title = title;
+        this.url = url;
+        this.content = content;
+        this.html = html;
+        this.type = type;
+
+    }
+
+    public NewsBean(int depth, String host, String title, String url, String content, String html) {
         this.depth = depth;
         this.host = host;
         this.title = title;
@@ -77,21 +94,36 @@ public class News implements Serializable {
         this.html = html;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 
+//    @Override
+//    public String toString() {
+//        return depth +"," + host + ","+ title +","+ url +","
+//                + content + "," + html +","+ type + '\n';
+//    }
+
+
     @Override
     public String toString() {
-        return depth +"," + host + ","+ title +","+ url +","
-                + content + "," + html +","+ type + '\n';
+        return "News{" +
+                "id=" + id +
+                ", depth=" + depth +
+                ", host='" + host + '\'' +
+                ", title='" + title + '\'' +
+                ", url='" + url + '\'' +
+                ", content='" + content + '\'' +
+                ", html='" + html + '\'' +
+                ", type=" + type +
+                '}';
     }
 
     public static void main(String[] args) {
-        System.out.println(new News(1,"h","dsf","df","df","sdf").toString());
+        System.out.println(new NewsBean(1,"h","dsf","df","df","sdf").toString());
     }
 }

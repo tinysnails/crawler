@@ -1,4 +1,4 @@
-package cn.edu.hfut.dmic.webcollector.crawler_demos.dao;
+package cn.edu.hfut.dmic.webcollector.crawler_demos.db;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -9,7 +9,7 @@ import org.apache.ibatis.session.defaults.DefaultSqlSessionFactory;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class DataConnection {
+public class MysqlDataConnection {
     private String resource = "mybatis.xml";
     private SqlSessionFactory sqlSessionFactory;
     private SqlSession sqlSession;

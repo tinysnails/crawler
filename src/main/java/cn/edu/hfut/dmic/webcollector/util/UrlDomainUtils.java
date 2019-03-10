@@ -2,6 +2,8 @@ package cn.edu.hfut.dmic.webcollector.util;
 
 
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,6 +33,8 @@ public class UrlDomainUtils {
         return domain;
     }
 
+
+    /** 获得一般域名 */
     public static String getDomainByUrl(String url) {
         String host = null;
         try {
@@ -47,10 +51,34 @@ public class UrlDomainUtils {
     }
 
 
+    /**
+     * 拼接网址
+     * @param baseURI
+     * @param relativePath
+     * @return 拼接后的网址
+     */
+    public static String getAbsoluteUrl(String baseURI, String relativePath) {
+        String abURL = null;
+        try {
+            if(relativePath.contains("javascript")) return "www.baidu.com#";
+            URI base = new URI(baseURI);//基本网页URI
+            URI abs = base.resolve(relativePath);//解析于上述网页的相对URL，得到绝对URI
+            URL absURL = abs.toURL();//转成URL
+            System.out.println("合并后的url:  " + absURL);
+            abURL = absURL.toString();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        } finally {
+            return abURL;
+        }
+    }
 
-    public static void main(String[] args) {
+
+        public static void main(String[] args) {
 //        System.out.println(UrlDomainUtils.getFirstDomainByUrl("https://www.sojson.com/blog/209.html"));
-        System.out.println(getDomainByUrl("http://mil.sohu.com/"));
+//        System.out.println(getDomainByUrl("http://mil.sohu.com/"));
 
 
     }
