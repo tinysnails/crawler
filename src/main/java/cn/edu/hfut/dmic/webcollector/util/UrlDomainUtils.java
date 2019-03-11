@@ -5,6 +5,8 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Collection;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -76,10 +78,27 @@ public class UrlDomainUtils {
     }
 
 
+    /**
+     * 获得正则表达式语句
+     */
+    public static String getRegexStr(Collection<String> list) {
+        StringBuilder sb = new StringBuilder();
+        for (String str: list
+             ) {
+            sb.append("(.*").append(str).append(".*)").append("|");
+        }
+
+        return sb.toString().substring(0, sb.length()-1);
+    }
+
         public static void main(String[] args) {
 //        System.out.println(UrlDomainUtils.getFirstDomainByUrl("https://www.sojson.com/blog/209.html"));
 //        System.out.println(getDomainByUrl("http://mil.sohu.com/"));
-
-
+//            for (int i = 0; i < 100; i++) {
+//                int a = new Random().nextInt(5);
+//                if( a >= 5 || a < 0){
+//                    System.out.println("fail");
+//                }
+//            }
     }
 }

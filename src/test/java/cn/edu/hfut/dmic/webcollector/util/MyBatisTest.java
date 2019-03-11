@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 public class MyBatisTest {
 
@@ -49,5 +50,9 @@ public class MyBatisTest {
     }
 
     public static void main(String[] args)  {
+//        String url = "https://www.163.com/";
+//        String urlRegex = "(163.com)|(hao123.com)|(sohu.com)|(people.com)|(cankaoxiaoxi.com)|(takungpao.com)|(huanqiu.com)|(sina.com)|(guancha.cn)|(thepaper.cn)|(ifeng.com)";
+//
+//        System.out.println(Pattern.matches(urlRegex, url));
     }
 }

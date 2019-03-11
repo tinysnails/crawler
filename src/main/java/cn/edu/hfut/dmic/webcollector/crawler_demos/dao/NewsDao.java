@@ -13,7 +13,7 @@ public class NewsDao {
     public void insertNews(NewsBean news) throws IOException {
         SqlSession sqlSession = connection.getSqlSession();
         sqlSession.insert("news.insertNews",news);
-        System.out.println(String.format("insert_id = %d", news.getId()));
+        System.out.println(String.format("========================insert_id = %d=============================================", news.getId()));
         sqlSession.commit();
         sqlSession.close();
     }

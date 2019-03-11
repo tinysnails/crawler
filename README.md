@@ -8,6 +8,10 @@
 [浏览器如何调试](https://cn.yizeng.me/2014/03/23/evaluate-and-validate-xpath-css-selectors-in-chrome-developer-tools/)
 
 
+## 特例
+凤凰网
+
+
 # WebCollector
 WebCollector is an open source web crawler framework based on Java.It provides
   some simple interfaces for crawling the Web,you can setup a
