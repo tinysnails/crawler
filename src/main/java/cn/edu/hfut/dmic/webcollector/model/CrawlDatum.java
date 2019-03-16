@@ -129,7 +129,7 @@ public class CrawlDatum implements Serializable, MetaGetter, MetaSetter<CrawlDat
         return meta(META_KEY_TYPE);
     }
     
-    public CrawlDatum type(String type){        // TODO readed this?
+    public CrawlDatum type(String type){        // TODO 添加一个原始meta数据,类型名为META_KEY_TYPE
         return meta(META_KEY_TYPE, type);
     }
 

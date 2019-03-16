@@ -37,7 +37,7 @@ public class Config {
 //    public static String DEFAULT_HTTP_METHOD = "GET";
     public static int TOP_N = 0;
 
-    public static int EXECUTE_INTERVAL = 0;
+    public static int EXECUTE_INTERVAL = 2000;      // 单位毫秒
 
     public static boolean AUTO_DETECT_IMG = false;
 

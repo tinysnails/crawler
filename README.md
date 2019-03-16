@@ -8,6 +8,9 @@
 [浏览器如何调试](https://cn.yizeng.me/2014/03/23/evaluate-and-validate-xpath-css-selectors-in-chrome-developer-tools/)
 
 
+### 配置
+配置是在 cn.edu.hfut.dmic.webcollector.util.Config里面设置的
+
 ## 特例
 凤凰网
 

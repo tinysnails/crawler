@@ -15,10 +15,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class NewsCrawler extends RamCrawler {
 
@@ -27,6 +25,7 @@ public class NewsCrawler extends RamCrawler {
     NewsDao newsDao;
     List regexList;     // 正则列表
     String regexStr;        // 正则语句
+    int code = 0;
 
     public NewsCrawler(boolean autoParse) {
         super(autoParse);
@@ -34,7 +33,7 @@ public class NewsCrawler extends RamCrawler {
         // FIXME webcollecto的网址过滤和内容过滤机制.
 
         List<String> seeds = Arrays.asList(
-//                "https://www.163.com/",
+//                "https://www.163.com/"
 //                        "http://news.sohu.com/"
 //                        "http://www.people.com.cn/"
 //                        "http://www.cankaoxiaoxi.com/"
@@ -42,7 +41,7 @@ public class NewsCrawler extends RamCrawler {
 //                        "http://www.huanqiu.com/?agt=6260"
 //                        "https://news.sina.com.cn/"
 //                        "https://www.guancha.cn/"
-//                        "https://news.qq.com/"
+//                        "https://news.qq.com/",
 //                        "http://www.thepaper.cn/"
 //                        "http://news.ifeng.com/"
 //                "http://www.xinhuanet.com/"
@@ -51,10 +50,9 @@ public class NewsCrawler extends RamCrawler {
 //                "http://m.ce.cn/"
 //                "http://www.cnr.cn/"
 //                "http://www.qstheory.cn/"
-                "http://news.baidu.com/"
+//                "http://news.baidu.com/",
+                    "http://www.chinanews.com/"
                         );
-//        List<String> seeds = Arrays.asList("https://www.163.com/");
-
         regexList = new ArrayList();
         // 添加种子与规则
         for (String seed :seeds) {
@@ -64,7 +62,6 @@ public class NewsCrawler extends RamCrawler {
             this.addRegex(firstHost);
         }
         regexStr = UrlDomainUtils.getRegexStr(regexList);
-
         this.addRegex("-.*#.*");
 
         // 设置请求插件
@@ -73,31 +70,6 @@ public class NewsCrawler extends RamCrawler {
         setThreads(50);
         getConf().setTopN(100);
         newsDao = new NewsDao();
-        // 利用JDBC连接数据库
-//        JdbcTemplate jdbcTemplate = null;
-//        try {
-//            jdbcTemplate = new MysqlHelper("jdbc:mysql://localhost/db_whukg?useUnicode=true&characterEncoding=utf8",
-//                    "root", "password", 5, 30).getTemplate();
-//
-//            /*创建数据表*/
-//            jdbcTemplate.execute("drop table if exists news;");
-//            jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS news (" +
-//                    "id int(10) NOT NULL AUTO_INCREMENT," +
-//                    "depth int(10) NOT NULL," +
-//                    "host VARCHAR(25)," +
-//                    "title VARCHAR(50)," +
-//                    "url VARCHAR(200)," +
-//                    "content LONGTEXT," +
-//                    "html LONGTEXT," +
-//                    "type int(1)," +
-//                    "PRIMARY KEY(id)" +
-//                    ") ENGINE=innodb DEFAULT CHARSET=utf8;");
-//            System.out.println("成功创建数据表 tb_content");
-//        } catch (Exception ex) {
-//            jdbcTemplate = null;
-//            System.out.println("mysql未开启或JDBCHelper.createMysqlTemplate中参数配置不正确!");
-//        }
-
     }
 
     // 可以自定义User-Agent和Cookies
@@ -146,11 +118,14 @@ public class NewsCrawler extends RamCrawler {
             return;
         }
 
-        if (page.matchUrl(".*news.baidu.com.*")) {
+        // 判断符合主站的网页才进行下一步
+        if (UrlDomainUtils.matchUrlAndHost(regexStr,page.url())) {
 
+            /* 进行网页的深度判别 */
             int depth = Integer.valueOf(page.meta("depth"));
             if (depth == 4) return;         // 各个网站的遍历深度为准
 
+            /* 获取网页元数据 */
             String url = page.url();
             String host = UrlDomainUtils.getDomainByUrl(url);
             String html = page.html();
@@ -164,23 +139,40 @@ public class NewsCrawler extends RamCrawler {
 //            e.printStackTrace();
                 System.out.println("===========未提取到主题内容==========");
             }
+            String anchor = (page.meta("s_t") == null) ? "" : page.meta("s_t");
+
+            int anchorLen = anchor.length();
+            int urlLen = url.length();
+            String parametes = UrlDomainUtils.getUrlParams(url);
+
+
+
+            /* 加入数据库 */
+            NewsBean newsBean = new NewsBean(depth, host, title, url, content, html,urlLen,anchorLen,anchor,parametes);
+
+            /* 定量爬取网页 */
+            try {
+                this.code = newsDao.insertNews(newsBean);
+                if (this.code % 5000 == 0) {
+                    System.out.println("==========================The count is satisfied.====================================");
+                    this.stop();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             // 加入种子url
 //        next.add(page.links("a[href]"));
 
             Elements elements = page.doc().select("a[href]");
             for (Element element : elements) {
-                // 合并的后的url
-                next.add(UrlDomainUtils.getAbsoluteUrl(page.url(), element.attributes().get("href")));
-            }
-
-
-            NewsBean newsBean = new NewsBean(depth, host, title, url, content, html);
-
-            try {
-                newsDao.insertNews(newsBean);
-            } catch (Exception e) {
-                e.printStackTrace();
+                /* 找到锚文本和url */
+                String anchorText = element.text();
+                String anchorUrl = element.absUrl("href");      // 获取绝对地址
+                if(UrlDomainUtils.matchUrlAndHost(regexStr,anchorUrl)){     // 符合主站正则才进行提取
+                    CrawlDatum demo = new CrawlDatum(anchorUrl, anchorText);        // 锚文本的key是"s_t"
+                    next.add(demo);
+                }
             }
         }
 
@@ -209,33 +201,12 @@ public class NewsCrawler extends RamCrawler {
          depth++;
          next.meta("depth", depth);
      }
-//
-//    /**
-//     * 初始化数据库相关操作
-//     */
-//    public void dbInitialize() {
-//        JdbcTemplate template =
-//                JDBCHelper.getJdbcTemplate("news");
-//        template.execute("drop table if exists news;");
-//        template.execute("CREATE TABLE IF NOT EXISTS news (" +
-//                "id int(10) NOT NULL AUTO_INCREMENT," +
-//                "depth int(10) NOT NULL," +
-//                "host VARCHAR(25)," +
-//                "title VARCHAR(50)," +
-//                "url VARCHAR(200)," +
-//                "context LONGTEXT," +
-//                "html LONGTEXT," +
-//                "type int(1)," +
-//                "PRIMARY KEY(id)" +
-//                ") ENGINE=innodb DEFAULT CHARSET=utf8;");
-//        this.template = template;
-//    }
-
 
 
     public static void main(String[] args) throws Exception {
         NewsCrawler crawler = new NewsCrawler(true);
 //        crawler.dbInitialize();
         crawler.start();
+
     }
 }

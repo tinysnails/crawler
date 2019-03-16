@@ -10,12 +10,14 @@ public class NewsDao {
     public MysqlDataConnection connection = new MysqlDataConnection();
 
     /* 插入新闻 */
-    public void insertNews(NewsBean news) throws IOException {
+    public int insertNews(NewsBean news) throws IOException {
         SqlSession sqlSession = connection.getSqlSession();
         sqlSession.insert("news.insertNews",news);
-        System.out.println(String.format("========================insert_id = %d=============================================", news.getId()));
+        int code = news.getId();
+        System.out.println(String.format("========================insert_id = %d=============================================", code));
         sqlSession.commit();
         sqlSession.close();
+        return code;
     }
 
     /* 删除新闻 */

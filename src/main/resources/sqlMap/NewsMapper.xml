@@ -10,8 +10,8 @@
           <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
               SELECT LAST_INSERT_ID()
           </selectKey>
-        INSERT INTO news(depth, host, title, url, content, html)
-              VALUE (#{depth},#{host},#{title},#{url},#{content},#{html})
+        INSERT INTO news(depth, host, title, url, content, html,anchor, url_len, anchor_len, parameters)
+              VALUE (#{depth},#{host},#{title},#{url},#{content},#{html}, #{anchor}, #{urlLen}, #{anchorLen}, #{parameters} )
     </insert>
 
     <delete id="deleteNewsAll" >

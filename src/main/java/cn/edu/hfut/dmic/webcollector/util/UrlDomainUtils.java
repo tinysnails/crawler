@@ -1,6 +1,7 @@
 package cn.edu.hfut.dmic.webcollector.util;
 
 
+import javax.swing.text.StyledEditorKit;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -54,15 +55,16 @@ public class UrlDomainUtils {
 
 
     /**
-     * 拼接网址
+     * 拼接网址,使用jsoup的abs代替
      * @param baseURI
      * @param relativePath
      * @return 拼接后的网址
      */
+    @Deprecated
     public static String getAbsoluteUrl(String baseURI, String relativePath) {
         String abURL = null;
         try {
-            if(relativePath.contains("javascript")) return "www.baidu.com#";
+            if(relativePath.contains("javascript")) return "#";
             URI base = new URI(baseURI);//基本网页URI
             URI abs = base.resolve(relativePath);//解析于上述网页的相对URL，得到绝对URI
             URL absURL = abs.toURL();//转成URL
@@ -85,13 +87,53 @@ public class UrlDomainUtils {
         StringBuilder sb = new StringBuilder();
         for (String str: list
              ) {
-            sb.append("(.*").append(str).append(".*)").append("|");
+            sb.append(str).append("|");
         }
-
         return sb.toString().substring(0, sb.length()-1);
     }
 
-        public static void main(String[] args) {
+
+    /**
+     * 判断url是否符合网址域名规定
+     * @param regex 主站正则
+     * @param content url
+     * @return 找到符合的主站规则的url,返回true
+     */
+    public static boolean matchUrlAndHost(String regex, String content) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(content);
+        return matcher.find() ?  true:  false;
+    }
+
+
+    /**
+     * 获得url的参数名称集合
+     * @param url
+     * @return 参数的名称集合
+     */
+    public static String getUrlParams(String url) {
+//        url = "https://www.baidu.com/s?wd=ss&rsv_spt=1&rsv_iqid=0x94550fc1000413c7&issp=1&f=8&rsv_bp=1&rsv_idx=2&ie=utf-8&tn=baiduhome_pg&rsv_enter=0&inputT=1717&rsv_sug3=11&rsv_sug4=1730&rsv_jmp=slow";
+        try {
+            String[] params = url.split("\\?")[1].split("&");
+            StringBuilder sb = new StringBuilder();
+            for (String str : params) {
+                sb.append(str.split("=")[0]).append(",");
+            }
+            return sb.toString().substring(0, sb.length() - 1);
+        } catch (ArrayIndexOutOfBoundsException e) {        // 若没有参数返回空
+            return "";
+        }
+    }
+
+    /**
+     * 根据url获取文件名
+     */
+    public static String getFileNameByUrl(String url) {
+        return null;
+    }
+
+
+    public static void main(String[] args) {
 //        System.out.println(UrlDomainUtils.getFirstDomainByUrl("https://www.sojson.com/blog/209.html"));
 //        System.out.println(getDomainByUrl("http://mil.sohu.com/"));
 //            for (int i = 0; i < 100; i++) {
@@ -100,5 +142,7 @@ public class UrlDomainUtils {
 //                    System.out.println("fail");
 //                }
 //            }
+        String a = UrlDomainUtils.getUrlParams("wwwwwww");
+        System.out.println(a);
     }
 }

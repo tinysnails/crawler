@@ -24,7 +24,7 @@ public class MyBatisTest {
     @Test
     public void testInsert() throws IOException {
         SqlSession sqlSession = connection.getSqlSession();
-        NewsBean news = new NewsBean(2,"host","title","url","content","html");
+        NewsBean news = new NewsBean(2,"host","title","url","content","html",12,12,"anchor","params");
 //        sqlSession.insert("news.insertNews", news);
 //        System.out.println(String.format("insert_id = %d", news.getId()));
 //        sqlSession.commit();

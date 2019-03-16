@@ -11,31 +11,59 @@ public class NewsBean implements Serializable {
     String content ;
     String html ;
     int type;
+    int urlLen;
+    int anchorLen;
+    String anchor;
+    String parameters;
+
+    public int getUrlLen() {
+        return urlLen;
+    }
+
+    public void setUrlLen(int urlLen) {
+        this.urlLen = urlLen;
+    }
+
+    public int getAnchor_len() {
+        return anchorLen;
+    }
+
+    public void setAnchor_len(int anchorLen) {
+        this.anchorLen = anchorLen;
+    }
+
+    public String getAnchor() {
+        return anchor;
+    }
+
+    public void setAnchor(String anchor) {
+        this.anchor = anchor;
+    }
+
+    public String getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(String parameters) {
+        this.parameters = parameters;
+    }
 
     // MyBatis期望空的构造器
     public NewsBean() {
 
     }
 
-    public NewsBean(int id, int depth, String host, String title, String url, String content, String html, int type) {
-        this.id = id;
+    public NewsBean(int depth, String host, String title, String url, String content, String html, int urlLen, int anchorLen, String anchor, String parameters) {
         this.depth = depth;
         this.host = host;
         this.title = title;
         this.url = url;
         this.content = content;
         this.html = html;
-        this.type = type;
-
-    }
-
-    public NewsBean(int depth, String host, String title, String url, String content, String html) {
-        this.depth = depth;
-        this.host = host;
-        this.title = title;
-        this.url = url;
-        this.content = content;
-        this.html = html;
+        this.urlLen = urlLen;
+        this.anchorLen = anchorLen;
+        this.anchor = anchor;
+        this.parameters = parameters;
     }
 
     public int getId() {
@@ -111,7 +139,7 @@ public class NewsBean implements Serializable {
 
     @Override
     public String toString() {
-        return "News{" +
+        return "NewsBean{" +
                 "id=" + id +
                 ", depth=" + depth +
                 ", host='" + host + '\'' +
@@ -120,10 +148,11 @@ public class NewsBean implements Serializable {
                 ", content='" + content + '\'' +
                 ", html='" + html + '\'' +
                 ", type=" + type +
+                ", urlLen=" + urlLen +
+                ", anchorLen=" + anchorLen +
+                ", anchor='" + anchor + '\'' +
+                ", parameters='" + parameters + '\'' +
                 '}';
     }
 
-    public static void main(String[] args) {
-        System.out.println(new NewsBean(1,"h","dsf","df","df","sdf").toString());
-    }
 }
