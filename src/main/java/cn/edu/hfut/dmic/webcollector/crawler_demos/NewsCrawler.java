@@ -64,27 +64,6 @@ public class NewsCrawler extends RamCrawler {
          next.meta("depth", depth);
      }
 
-    /**
-     * 初始化数据库相关操作
-     */
-//    public void dbInitialize() {
-//        JdbcTemplate template =
-//                JDBCHelper.getJdbcTemplate("news");
-//        template.execute("drop table if exists news;");
-//        template.execute("CREATE TABLE IF NOT EXISTS news (" +
-//                "id int(10) NOT NULL AUTO_INCREMENT," +
-//                "depth int(10) NOT NULL," +
-//                "host VARCHAR(25)," +
-//                "title VARCHAR(50)," +
-//                "url VARCHAR(200)," +
-//                "context LONGTEXT," +
-//                "html LONGTEXT," +
-//                "type int(1)," +
-//                "PRIMARY KEY(id)" +
-//                ") ENGINE=innodb DEFAULT CHARSET=utf8;");
-//        this.template = template;
-//    }
-
 
 
     public static void main(String[] args) throws Exception {
