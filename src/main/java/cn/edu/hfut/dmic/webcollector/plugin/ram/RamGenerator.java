@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 /**
+ *  基于内存的任务生成器
  *
  * @author hu
  */
@@ -33,11 +34,18 @@ public class RamGenerator extends Generator {
 
     public RamGenerator(RamDB ramDB) {
         this.ramDB = ramDB;
-        iterator = ramDB.crawlDB.entrySet().iterator();
+        iterator = ramDB.crawlDB.entrySet().iterator();     //对crawlDB的迭代器。里面会包含已经爬取的任务，所以使用generatorfilter进行过滤
     }
 
-    Iterator<Entry<String, CrawlDatum>> iterator;
+    Iterator<Entry<String, CrawlDatum>> iterator;       //迭代器是全局的，所以直接调用方法就行
 
+    /**
+     * 从内存数据库RamDB的crawlDB中取任务,不过滤
+     * 对crawlDB的迭代器。里面会包含已经爬取的任务，所以后续使用generatorfilter进行过滤
+     * 过滤发生在Generator.next().这里的未过滤指的是未针对datum状态进行过滤
+     * @return
+     * @throws Exception
+     */
     @Override
     public CrawlDatum nextWithoutFilter() throws Exception {
         if(iterator.hasNext()){
@@ -50,7 +58,7 @@ public class RamGenerator extends Generator {
 
     @Override
     public void close() throws Exception {
-
+        // 内存数据库不需要关闭generato
     }
 
 

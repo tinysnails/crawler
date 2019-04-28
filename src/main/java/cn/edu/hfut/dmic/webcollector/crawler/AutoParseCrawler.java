@@ -63,7 +63,8 @@ public abstract class AutoParseCrawler extends Crawler implements Executor, Visi
         super.start(depth);
     }
 
-    //    @Override
+
+//    @Override
 //    public Page getResponse(CrawlDatum crawlDatum) throws Exception {
 //        HttpRequest request = new HttpRequest(crawlDatum);
 //        return request.responsePage();
@@ -89,6 +90,9 @@ public abstract class AutoParseCrawler extends Crawler implements Executor, Visi
      * 爬虫会在后面的任务中继续爬取execute失败的任务。
      * 如果一个任务重试次数太多，超过Config.MAX_EXECUTE_COUNT，
      * 爬虫会忽略这个任务。Config.MAX_EXECUTE_COUNT的值可以被修改
+     *
+     * 此处包含两个操作,一个是下载page操作
+     *          另一个是dispatch操作: 包含before,vistor, after和autoparse link操作
      * @param datum
      * @param next
      * @throws Exception
@@ -97,7 +101,7 @@ public abstract class AutoParseCrawler extends Crawler implements Executor, Visi
     public void execute(CrawlDatum datum, CrawlDatums next) throws Exception {
         Page page = requester.getResponse(datum);
 //        visitor.visit(page, next);
-        visitorMethodDispatcher.dispatch(page, next);
+        visitorMethodDispatcher.dispatch(page, next);       // 解析page页面的链接加入next
 
     }
 

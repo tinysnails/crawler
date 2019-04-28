@@ -1,8 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="test">
-    <select id="findNewsById" parameterType="int" resultType="cn.edu.hfut.dmic.webcollector.crawler_demos.bean.News">
-  SELECT * FROM news WHERE ID = #{id}
-</select>
+<mapper namespace="news">
+    <select id="findNewsById" parameterType="int" resultType="cn.edu.hfut.dmic.webcollector.crawler_demos.bean.NewsBean">
+        SELECT * FROM news WHERE ID = #{id}
+    </select>
+
+    <insert id="insertNews" parameterType="cn.edu.hfut.dmic.webcollector.crawler_demos.bean.NewsBean">
+          <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+              SELECT LAST_INSERT_ID()
+          </selectKey>
+        INSERT INTO news(depth, host, title, url, content, html,anchor, url_len, anchor_len, parameters)
+              VALUE (#{depth},#{host},#{title},#{url},#{content},#{html}, #{anchor}, #{urlLen}, #{anchorLen}, #{parameters} )
+    </insert>
+
+
+    <delete id="deleteNewsAll" >
+        DELETE FROM news
+    </delete>
+
+    <update id="cleanNewsAll">
+        TRUNCATE news
+    </update>
+
+    <insert id="insertNewsCommon" parameterType="cn.edu.hfut.dmic.webcollector.crawler_demos.bean.NewsBean">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO news_common(depth, host, title, url, content, html,anchor, url_len, anchor_len, parameters)
+        VALUE (#{depth},#{host},#{title},#{url},#{content},#{html}, #{anchor}, #{urlLen}, #{anchorLen}, #{parameters} )
+    </insert>
+
+    <delete id="deleteNewsCommonAll" >
+        DELETE FROM news_common
+    </delete>
+
+    <update id="cleanNewsCommonAll">
+        TRUNCATE news_common
+    </update>
+
+    <insert id="insertNewsTopic" parameterType="cn.edu.hfut.dmic.webcollector.crawler_demos.bean.NewsBean">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO news_topic(depth, topic, host, title, url, content, html,anchor, url_len, anchor_len, parameters)
+        VALUE (#{depth},#{topic},#{host},#{title},#{url},#{content},#{html}, #{anchor}, #{urlLen}, #{anchorLen}, #{parameters} )
+    </insert>
+
+    <delete id="deleteNewsTopicAll" >
+        DELETE FROM news_topic
+    </delete>
+
+    <update id="cleanNewsTopicAll">
+        TRUNCATE news_topic
+    </update>
+
+
 </mapper>

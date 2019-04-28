@@ -22,7 +22,8 @@ import cn.edu.hfut.dmic.webcollector.model.CrawlDatums;
 
 /**
  * 爬取过程中，写入爬取历史、网页Content、解析信息的Writer
- *
+ *  爬取时，写爬取信息的SegmentWriter的缓存，
+ *  如果希望爬取信息在断电等异常中断时无 丢失，将该属性值设为1，但会造成磁盘操作频繁。
  * @author hu
  */
 public interface SegmentWriter {

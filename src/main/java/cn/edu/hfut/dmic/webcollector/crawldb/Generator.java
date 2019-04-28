@@ -33,7 +33,7 @@ public abstract class Generator extends DefaultConfigured{
 
     public static final Logger LOG = LoggerFactory.getLogger(Generator.class);
 
-    protected GeneratorFilter filter = null;
+    protected GeneratorFilter filter = null;        //只对状态进行过滤，未成功爬取的任务（包括未爬取和爬取失败）才能被输出
     protected int totalGenerate;
 
 
@@ -43,14 +43,15 @@ public abstract class Generator extends DefaultConfigured{
 
 
     /**
-     * return null if there is no CrawlDatum to generate
+     * return null if there is no CrawlDatum to generate,获取下一个任务
      * @return
      */
     public CrawlDatum next(){
-        int topN = getConf().getTopN();
+        int topN = getConf().getTopN();     //每个网页解析时，保存链接的数量上限(如果为null，则链接数量无上限)
+        // 单个任务最大执行次数
         int maxExecuteCount = getConf().getOrDefault(Configuration.KEY_MAX_EXECUTE_COUNT, Integer.MAX_VALUE);
 
-        if(topN > 0 && totalGenerate >= topN){
+        if(topN > 0 && totalGenerate >= topN){      //FIXME 这里topN是限制爬取最大网页数吗？
             return null;
         }
 
@@ -61,11 +62,11 @@ public abstract class Generator extends DefaultConfigured{
                 if (datum == null) {
                     return datum;
                 }
-                if(filter == null || (datum = filter.filter(datum))!=null){
-                    if (datum.getExecuteCount() > maxExecuteCount) {
+                if(filter == null || (datum = filter.filter(datum))!=null){// 如果没有过滤器，或者状态过滤器(datum未被[成功]爬取)返回datum
+                    if (datum.getExecuteCount() > maxExecuteCount) {    // 如果该任务执行次数最大，就放弃该任务
                         continue;
                     }
-                    totalGenerate += 1;
+                    totalGenerate += 1;                 // 一共产生的任务数，但不一定就是爬取到的url数
                     return datum;
                 }
 
@@ -77,6 +78,12 @@ public abstract class Generator extends DefaultConfigured{
         }
     }
 
+    /**
+     * 从数据库的crawldb中获取下一个Datum,迭代方式;
+     * 未经过过滤的任务
+     * @return
+     * @throws Exception
+     */
     public abstract CrawlDatum nextWithoutFilter() throws Exception;
 
 

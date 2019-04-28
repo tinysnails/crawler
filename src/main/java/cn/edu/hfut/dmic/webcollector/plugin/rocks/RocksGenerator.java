@@ -41,6 +41,12 @@ public class RocksGenerator extends Generator {
         crawldbIterator.seekToFirst();
     }
 
+
+    /**
+     * 迭代的访问数据库中的种子,创造新的datum,供next()进行过滤
+     * @return
+     * @throws Exception
+     */
     @Override
     public CrawlDatum nextWithoutFilter() throws Exception {
 

@@ -107,6 +107,11 @@ public class RegexRule {
    
     /**
      * 判断输入字符串是否符合正则规则
+     *      先检查负正则,再检查正正则;
+     *      使用的是Pattern.matcher()方法
+     *
+     *      Pattern.matches(String regex,CharSequence input)是一个静态方法,用于快速匹配字符串,
+     *      该方法适合用于只匹配一次,且匹配全部字符串
      * @param str 输入的字符串
      * @return 输入字符串是否符合正则规则
      */
@@ -130,6 +135,12 @@ public class RegexRule {
         } else {
             return true;
         }
+    }
 
+    public static void main(String[] args) {
+        RegexRule rule = new RegexRule();
+        rule.addRule(".*?whu.edu.cn.*?");
+        boolean isOk = rule.satisfy("http://news.whu.edu.cn");
+        System.out.println(isOk);
     }
 }

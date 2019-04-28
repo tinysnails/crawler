@@ -23,12 +23,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 配置类
  * @author hu
  */
 public class Configuration{
 
     public static final String KEY_MAX_EXECUTE_COUNT = "MAX_EXECUTE_COUNT";
-    public static final String KEY_TOP_N = "TOP_N";     // FIXME topN什么意思?
+    public static final String KEY_TOP_N = "TOP_N";
 
     public static final String KEY_CONNECT_TIMEOUT = "CONNECT_TIMEOUT";
     public static final String KEY_READ_TIMEOUT = "READ_TIMEOUT";
@@ -48,7 +49,7 @@ public class Configuration{
 
     public static final String KEY_AUTO_DETECT_IMG = "AUTO_DETECT_IMG";
 
-    protected HashMap<String, Object> data = new HashMap<String, Object>();
+    protected HashMap<String, Object> data = new HashMap<String, Object>();     // 负责存储相关信息的
 
     public Configuration set(String key, Object value){
         data.put(key, value);
@@ -130,6 +131,12 @@ public class Configuration{
     public Integer getExecuteInterval(){
         return get(KEY_EXECUTE_INTERVAL);
     }
+
+    /**
+     * 单个线程的爬取间隔,单位ms,  1 s == 1000 ms
+     * @param executeInterval
+     * @return
+     */
     public Configuration setExecuteInterval(Integer executeInterval){
         return set(KEY_EXECUTE_INTERVAL, executeInterval);
     }

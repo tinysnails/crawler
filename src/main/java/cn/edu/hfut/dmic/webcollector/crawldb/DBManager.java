@@ -24,7 +24,7 @@ import cn.edu.hfut.dmic.webcollector.model.CrawlDatums;
 import cn.edu.hfut.dmic.webcollector.util.ConfigurationUtils;
 
 /**
- * BManager用于维护爬取历史，以做到去重、断点爬取等功能
+ * DBManager用于维护爬取历史，以做到去重、断点爬取等功能
  * @author hu
  */
 public abstract class DBManager extends DefaultConfigured implements Injector, SegmentWriter{
@@ -50,7 +50,7 @@ public abstract class DBManager extends DefaultConfigured implements Injector, S
 
     public abstract void inject(CrawlDatums datums, boolean force) throws Exception;
 
-    public abstract void merge() throws Exception;
+    public abstract void merge() throws Exception;      // 分桶吧，需要爬取的一个桶，下一轮需要爬的领一个桶，任务失败需要爬的也一个桶，最终merge()汇集到第一个桶
 
     public void inject(CrawlDatum datum) throws Exception {
         inject(datum, false);

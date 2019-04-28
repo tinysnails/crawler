@@ -1,11 +1,26 @@
 ## 使用方式
 1. [WebCollector使用方式一](https://blog.csdn.net/liujinwen1992/article/details/39255549)
 2. [详细使用方式](https://blog.csdn.net/wangmx1993328/article/details/81662001)
-
+3. [webcollector简单实用]
 
 ### JSOUP选择器的使用
 [jsoup选择器语法文档](https://www.open-open.com/jsoup/selector-syntax.htm)
 [浏览器如何调试](https://cn.yizeng.me/2014/03/23/evaluate-and-validate-xpath-css-selectors-in-chrome-developer-tools/)
+
+
+### 配置
+配置是在 cn.edu.hfut.dmic.webcollector.util.Config里面设置的
+
+### 自定义过滤器
+```
+1. 继承NextFilter
+2. 内部类,crawl.setNextFilter( new NextFilter(){//实现filter方法} )
+    见DemoNextFilter 
+```
+
+
+## 特例
+凤凰网
 
 
 # WebCollector

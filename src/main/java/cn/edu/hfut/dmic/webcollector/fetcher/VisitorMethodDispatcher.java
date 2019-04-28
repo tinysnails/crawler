@@ -203,6 +203,15 @@ public class VisitorMethodDispatcher extends DefaultConfigured{
         return null;
     }
 
+    /**
+     * 对一个page进行的visitor操作
+     *       可在其之前,执行其,其之后
+     *       设置autoparse=true,则在vistor()与after中间执行parseLink出符合正则的
+     * @param page
+     * @param next
+     * @throws InvocationTargetException
+     * @throws IllegalAccessException
+     */
     public void dispatch(Page page, CrawlDatums next) throws InvocationTargetException, IllegalAccessException {
         HashSet<Method> invokedMethods = new HashSet<Method>();
 
@@ -226,8 +235,8 @@ public class VisitorMethodDispatcher extends DefaultConfigured{
         }
         method.invoke(visitor, page, next);
 //        visitor.visit(page, next);
-
-        if (autoParse && !regexRule.isEmpty()) {
+        /* autoparse符合正则的连接 */
+        if (autoParse && !regexRule.isEmpty()) {    // autoParse 这里起作用了
             parseLink(page, next);
         }
 
@@ -244,6 +253,11 @@ public class VisitorMethodDispatcher extends DefaultConfigured{
         this.autoParse = autoParse;
     }
 
+    /**
+     * autoparse解析,实际就是解析所有的符合正则的链接,加入next
+     * @param page
+     * @param next
+     */
     protected void parseLink(Page page, CrawlDatums next) {
         String conteType = page.contentType();
         if (conteType != null && conteType.contains("text/html")) {
@@ -253,7 +267,6 @@ public class VisitorMethodDispatcher extends DefaultConfigured{
                 next.add(links);
             }
         }
-
     }
 
 

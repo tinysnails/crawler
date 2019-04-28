@@ -299,6 +299,13 @@
             <version>5.0.73</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.datumbox/libsvm -->
+        <dependency>
+            <groupId>com.datumbox</groupId>
+            <artifactId>libsvm</artifactId>
+            <version>3.22</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -333,8 +340,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.37</version>
-            <scope>provided</scope>
+            <version>5.1.47</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.avro/avro -->
@@ -348,20 +354,31 @@
 
 
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-            <version>4.3.18.RELEASE</version>
-            <scope>provided</scope>
-        </dependency>
+        <!--利用Spring-jdbc连接数据库-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework</groupId>-->
+            <!--<artifactId>spring-jdbc</artifactId>-->
+            <!--<version>4.3.18.RELEASE</version>-->
+        <!--</dependency>-->
 
 
         <dependency>
             <groupId>com.mchange</groupId>
             <artifactId>c3p0</artifactId>
             <version>0.9.5.2</version>
-            <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.mchange</groupId>
+            <artifactId>mchange-commons-java</artifactId>
+            <version>0.2.10</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.maven-play-plugin.com.mchange</groupId>
+            <artifactId>c3p0-oracle-thin-extras</artifactId>
+            <version>0.9.5</version>
+        </dependency>
+
         <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
@@ -381,6 +398,12 @@
             <!--<version>1.2.17</version>-->
         <!--</dependency>-->
 
+        <!-- https://mvnrepository.com/artifact/tw.edu.ntu.csie/libsvm -->
+        <dependency>
+            <groupId>tw.edu.ntu.csie</groupId>
+            <artifactId>libsvm</artifactId>
+            <version>3.23</version>
+        </dependency>
 
 
     </dependencies>

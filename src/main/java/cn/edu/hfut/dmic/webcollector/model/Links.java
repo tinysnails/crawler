@@ -131,6 +131,13 @@ public class Links implements Iterable<String> {
         return addBySelector(ele ,cssSelector,false);
     }
 
+    /**
+     * 根据正则提取网页的links
+     * @param ele
+     * @param regexRule
+     * @param parseSrc 是否解析src标签,即照片
+     * @return
+     */
     public Links addByRegex(Element ele, RegexRule regexRule, boolean parseSrc) {
         for(String href: ele.select("a[href]").eachAttr("abs:href")){
             if (regexRule.satisfy(href)) {

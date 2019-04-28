@@ -1,4 +1,4 @@
-package cn.edu.hfut.dmic.webcollector.crawler_demos;
+package cn.edu.hfut.dmic.webcollector.crawler_demos.service;
 
 import cn.edu.hfut.dmic.webcollector.plugin.net.OkHttpRequester;
 import org.jsoup.Jsoup;
@@ -14,19 +14,20 @@ import java.io.*;
  *
  */
 public class JsoupDemo {
-    String url = "https://github.blog/page/2/";
+    static String url = "http://www.hb.chinanews.com/gatq.html";
 
     public void testJsoup()throws IOException {
-        File input = new File("github_demo.html");
+        File input = new File("demo_test.html");
         Document doc = Jsoup.parse(input,"UTF-8");
         Elements links = doc.select("a[href]");
         Elements pngs = doc.select("img[src$=.png]");
 
         // 打印Element里面的元素
         for (Element link:links
-             ) {
+        ) {
             System.out.println(String.format("url = %s", link.attributes().get("href")));       // 获取Element的href属性
-
+            System.out.println(String.format("anchor = %s", link.text()));       // 获取Element的href属性
+            return;
         }
     }
 
@@ -52,8 +53,11 @@ public class JsoupDemo {
     }
 
 
+
+
     public static void main(String[] args) throws IOException {
-//        new JsoupDemo().WriteUrlHtmlToFile("https://github.blog/page/2/");
+//        new JsoupDemo().WriteUrlHtmlToFile(url);
+        new JsoupDemo().testJsoup();
 
 
     }

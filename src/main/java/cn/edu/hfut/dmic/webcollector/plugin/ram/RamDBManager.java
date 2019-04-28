@@ -26,7 +26,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
+ *  关于数据库的操作
+ *  实现爬虫任务的插入,
  * @author hu
  */
 public class RamDBManager extends DBManager {
@@ -68,6 +69,12 @@ public class RamDBManager extends DBManager {
     public void close() throws Exception {
     }
 
+    /**
+     * 内存数据库中插入数据
+     * @param datum 任务
+     * @param force 如果数据库中存在key,是否强制插入
+     * @throws Exception
+     */
     @Override
     public void inject(CrawlDatum datum, boolean force) throws Exception {
         String key = datum.key();
@@ -86,6 +93,10 @@ public class RamDBManager extends DBManager {
         }
     }
 
+    /**
+     * 讲fetchDb和linkDb里面的数据合并到crawlDB,即加入任务数据库
+     * @throws Exception
+     */
     @Override
     public void merge() throws Exception {
         LOG.info("start merge");
@@ -97,6 +108,7 @@ public class RamDBManager extends DBManager {
         }
 
         /*合并link库*/
+        // 在此处,有个去重
         LOG.info("merge link database");
         for (String key : ramDB.linkDB.keySet()) {
             if (!ramDB.crawlDB.containsKey(key)) {
@@ -119,7 +131,7 @@ public class RamDBManager extends DBManager {
 
     @Override
     public synchronized void writeFetchSegment(CrawlDatum fetchDatum) throws Exception {
-        ramDB.fetchDB.put(fetchDatum.key(), fetchDatum);
+        ramDB.fetchDB.put(fetchDatum.key(), fetchDatum);        //将已经执行过execute()的datum放入内存数据库的fetchDB,这里可能是爬取成功的，可能是爬取失败的。
     }
 
     @Override

@@ -29,7 +29,7 @@ public abstract class RamCrawler extends AutoParseCrawler {
     
     public RamCrawler(){
         this(true);
-    }
+    }       // 默认自动开启自动提取
 
     public RamCrawler(boolean autoParse) {
         super(autoParse);

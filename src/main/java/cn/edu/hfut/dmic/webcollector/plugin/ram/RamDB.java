@@ -24,12 +24,17 @@ import java.util.HashMap;
 
 
 /**
- *
+ * 内存数据库,就是四个HashMap分别存储
+ *  key不再是url了
+ *  crawlDB :  存储即将爬取任务数据库
+ *  fetchDB : 下载的数据库
+ *  linkDB  :   提取的链接数据库
+ *  reddirectDB :   重定向的数据库
  * @author hu
  */
 public class RamDB {
     
-    protected HashMap<String, CrawlDatum> crawlDB = new HashMap<String, CrawlDatum>();
+    protected HashMap<String, CrawlDatum> crawlDB = new HashMap<String, CrawlDatum>();      //FIXME 这里的元素能去除吗? 任务是怎么加入的 基于内存去重的
     protected HashMap<String, CrawlDatum> fetchDB = new HashMap<String, CrawlDatum>();
     protected HashMap<String, CrawlDatum> linkDB = new HashMap<String, CrawlDatum>();
     protected HashMap<String, String> redirectDB = new HashMap<String, String>();

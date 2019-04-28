@@ -61,14 +61,14 @@ public class Crawler extends DefaultConfigured {
 
 
     protected CrawlDatums seeds = new CrawlDatums();
-    protected CrawlDatums forcedSeeds = new CrawlDatums();  // FIXME forcedSeeds什么意思?
+    protected CrawlDatums forcedSeeds = new CrawlDatums();  // forcedSeeds 数据库中即使有，也要强制插入
     protected Fetcher fetcher;
     protected int maxExecuteCount = -1;
 
     protected Executor executor = null;
     protected NextFilter nextFilter = null;
     protected DBManager dbManager;
-    protected GeneratorFilter generatorFilter = new StatusGeneratorFilter();
+    protected GeneratorFilter generatorFilter = new StatusGeneratorFilter();      //    状态过滤器
     protected void inject() throws Exception {
         dbManager.inject(seeds);
     }
@@ -119,6 +119,8 @@ public class Crawler extends DefaultConfigured {
         }
 
         status = RUNNING;
+        // 此处是深度设置。
+        // 每一层有一个新的fetcher
         for (int i = 0; i < depth; i++) {
             if (status == STOPED) {
                 break;
@@ -133,7 +135,7 @@ public class Crawler extends DefaultConfigured {
             fetcher.setExecutor(executor);
             fetcher.setNextFilter(nextFilter);
             fetcher.setThreads(threads);
-            int totalGenerate = fetcher.fetchAll(generatorFilter);
+            int totalGenerate = fetcher.fetchAll(generatorFilter);      //此处开始新一轮的fetch
 
             long endTime = System.currentTimeMillis();
             long costTime = (endTime - startTime) / 1000;

@@ -22,6 +22,8 @@ import cn.edu.hfut.dmic.webcollector.model.CrawlDatums;
 
 /**
  * Executor用于定制每次的爬取和抽取操作
+ *      默认是下载网页,可以自定义对页面如何下载
+ *          如,对动态网页,选用selenium进行处理
  * Created by hu on 2016/2/18.
  */
 public interface Executor{

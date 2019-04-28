@@ -33,11 +33,11 @@ public class Config {
 
     public static int TIMEOUT_CONNECT = 3000;
     public static int TIMEOUT_READ = 10000;
-    public static int MAX_EXECUTE_COUNT = 10;
+    public static int MAX_EXECUTE_COUNT = 5;
 //    public static String DEFAULT_HTTP_METHOD = "GET";
     public static int TOP_N = 0;
 
-    public static int EXECUTE_INTERVAL = 0;
+    public static int EXECUTE_INTERVAL = 2000;      // 单位毫秒
 
     public static boolean AUTO_DETECT_IMG = false;
 
