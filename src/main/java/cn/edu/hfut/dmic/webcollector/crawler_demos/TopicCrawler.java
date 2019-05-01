@@ -209,12 +209,25 @@ public class TopicCrawler extends RamCrawler {
     }
 
 
+    /*
+    * 三层 体育测试
+    *
+    * 2019-04-30 01:50:27 INFO cn.edu.hfut.dmic.webcollector.fetcher.Fetcher  - -activeThreads=1, spinWaiting=0, fetchQueue.size=0
+2019-04-30 01:50:28 INFO cn.edu.hfut.dmic.webcollector.fetcher.Fetcher  - -activeThreads=0, spinWaiting=0, fetchQueue.size=0
+2019-04-30 01:50:28 INFO cn.edu.hfut.dmic.webcollector.fetcher.Fetcher  - clear all activeThread
+2019-04-30 01:50:28 INFO cn.edu.hfut.dmic.webcollector.fetcher.Fetcher  - close generator:cn.edu.hfut.dmic.webcollector.plugin.ram.RamGenerator
+2019-04-30 01:50:28 INFO cn.edu.hfut.dmic.webcollector.fetcher.Fetcher  - close segmentWriter:cn.edu.hfut.dmic.webcollector.plugin.ram.RamDBManager
+2019-04-30 01:50:28 INFO cn.edu.hfut.dmic.webcollector.crawler.Crawler  - depth 3 finish:
+	total urls:	476
+	total time:	48 seconds
+    * */
+
 
     public static void main(String[] args) throws Exception {
         TopicCrawler topicCrawler = new TopicCrawler(false);       //通用的就是false,需要自己的classifer判别
         topicCrawler.setThreads(20);
         topicCrawler.getConf().setExecuteInterval(1000);
         topicCrawler.topic = "体育";
-        topicCrawler.start(4);      // 爬取深度
+        topicCrawler.start(3);      // 爬取深度
     }
 }

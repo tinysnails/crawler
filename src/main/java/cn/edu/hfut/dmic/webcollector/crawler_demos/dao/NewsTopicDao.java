@@ -38,10 +38,15 @@ public class NewsTopicDao {
         sqlSession.close();
     }
 
+    public void cleanAll() throws IOException {
+        this.deleteNewsAll();
+        this.cleanNewsAll();
+    }
+
     public static void main(String[] args) throws IOException {
         NewsTopicDao newsTopicDao = new NewsTopicDao();
-        NewsBean news = new NewsBean(2,"host","title","url","content","html",12,12,"anchor","params");
-        newsTopicDao.insertNews(news);
-        newsTopicDao.deleteNewsAll();
+//        NewsBean news = new NewsBean(2,"host","title","url","content","html",12,12,"anchor","params");
+//        newsTopicDao.insertNews(news);
+        newsTopicDao.cleanAll();
     }
 }

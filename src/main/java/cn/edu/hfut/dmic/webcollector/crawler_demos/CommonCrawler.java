@@ -53,7 +53,7 @@ public class CommonCrawler extends RamCrawler {
                 // 不含有元数据"depth"
                 page.meta("depth", depth);
             }
-            if(depth > 4) return;       //只爬深度为4的
+            if(depth >= 4) return;       //只爬深度为4的
 
 
 
@@ -158,10 +158,26 @@ public class CommonCrawler extends RamCrawler {
     }
 
 
+    /**
+     * 2019-04-30 02:08:24 INFO cn.edu.hfut.dmic.webcollector.fetcher.Fetcher  - done: [200] Key: http://www.sohu.com/a/310963314_461392?scm=0.0.0.0 (URL: http://www.sohu.com/a/310963314_461392?scm=0.0.0.0)
+     * 2019-04-30 02:08:24 INFO cn.edu.hfut.dmic.webcollector.fetcher.Fetcher  - done: [200] Key: http://www.sohu.com/a/311036076_115124#comment_area (URL: http://www.sohu.com/a/311036076_115124#comment_area)
+     * 2019-04-30 02:08:25 INFO cn.edu.hfut.dmic.webcollector.fetcher.Fetcher  - -activeThreads=11, spinWaiting=0, fetchQueue.size=0
+     * 2019-04-30 02:08:26 INFO cn.edu.hfut.dmic.webcollector.fetcher.Fetcher  - -activeThreads=2, spinWaiting=0, fetchQueue.size=0
+     * 2019-04-30 02:08:27 INFO cn.edu.hfut.dmic.webcollector.fetcher.Fetcher  - -activeThreads=0, spinWaiting=0, fetchQueue.size=0
+     * 2019-04-30 02:08:27 INFO cn.edu.hfut.dmic.webcollector.fetcher.Fetcher  - clear all activeThread
+     * 2019-04-30 02:08:27 INFO cn.edu.hfut.dmic.webcollector.fetcher.Fetcher  - close generator:cn.edu.hfut.dmic.webcollector.plugin.ram.RamGenerator
+     * 2019-04-30 02:08:27 INFO cn.edu.hfut.dmic.webcollector.fetcher.Fetcher  - close segmentWriter:cn.edu.hfut.dmic.webcollector.plugin.ram.RamDBManager
+     * 2019-04-30 02:08:27 INFO cn.edu.hfut.dmic.webcollector.crawler.Crawler  - depth 3 finish:
+     * 	total urls:	6968
+     * 	total time:	785 seconds
+     * @param args
+     * @throws Exception
+     */
+
 
     public static void main(String[] args) throws Exception {
         CommonCrawler topicCrawler = new CommonCrawler(true);       //通用的就是false,需要自己的classifer判别
         topicCrawler.setThreads(20);
-        topicCrawler.start(4);      // 爬取深度
+        topicCrawler.start(3);      // 爬取深度
     }
 }

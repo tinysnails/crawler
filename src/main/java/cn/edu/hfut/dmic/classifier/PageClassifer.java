@@ -69,7 +69,7 @@ public class PageClassifer {
 
         LOG.info(String.format("[%s]url为 %s" ,type.get(aDouble),url));
 
-        return aDouble.intValue() == 1 ? "详情页" : "索引页";
+        return type.get(aDouble);
     }
 
     /**
@@ -195,9 +195,10 @@ public class PageClassifer {
 
     public static void main(String[] args) {
         PageClassifer classifer = new PageClassifer();
-        classifer.getPageType("http://www.xinhuanet.com/politics/leaders/2019-04/27/c_1124425067.htm",26,3);
-        classifer.getPageType("http://sports.sina.com.cn/basketball/nba/2019-04-27/doc-ihvhiqax5348114.shtml",26,3);
-        classifer.getPageType("http://sports.sina.com.cn/",4,1);
+//        classifer.getPageType("http://www.xinhuanet.com/politics/leaders/2019-04/27/c_1124425067.htm",26,3);
+//        classifer.getPageType("http://sports.sina.com.cn/basketball/nba/2019-04-27/doc-ihvhiqax5348114.shtml",26,3);
+//        classifer.getPageType("http://sport.sohu.com",2,2);
+        classifer.getPageType("http://sports.sohu.com/s/csl",8,2);
 
     }
 

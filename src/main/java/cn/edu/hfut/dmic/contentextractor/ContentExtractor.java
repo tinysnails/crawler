@@ -528,7 +528,7 @@ public class ContentExtractor {
 
         //标题页
 //        News news = ContentExtractor.getNewsByUrl("https://tuijian.hao123.com/");   // 标题页,但是不提示异常,而是显示一个div块
-        String url = "http://www.sohu.com/a/300020261_362042?g=0?code=a0925b1eaf671e1ad528c793315e686b&spm=smpc.home.top-news1.1.1552105540677g6q5sAA&_f=index_cpc_0";
+        String url = "http://www.sohu.com/a/310974433_463728?scm=0.0.0.0&spm=smpc.fb-csl-home.top-news-1.1.15566137004750twgg93";
         News news = ContentExtractor.getNewsByUrl(url);
 
 //        News news = ContentExtractor.getNewsByUrl("https://baike.baidu.com/item/handle/2971688?fr=aladdin");
